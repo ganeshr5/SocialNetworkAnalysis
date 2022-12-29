@@ -27,3 +27,44 @@ output = scraper.scrape()
 cols = ('id', 'title', 'categories', 'abstract', 'doi', 'created', 'updated', 'authors')
 df = pd.DataFrame(output, columns = cols)
 
+
+# Part 2: Create the network
+G = nx.Graph()
+df2 = df[['authors']]
+#print(df2.iloc[3][0])
+m=0
+n=0
+
+G.clear()
+numrows = df2.shape[0]
+
+# add each author name as a node
+for i in range(numrows):
+    #print(df2.iloc[i][0])
+    x = (df2.iloc[i][0])
+    
+    # add nodes
+    for j in (df2.iloc[i][0]):
+        #print (j)
+        m=m+1
+        G.add_node(j)
+        
+    # add edges
+    for k in range(len(x)):
+        #print (k)
+        for l in range(k, len(x) - 1):
+            n=n+1
+            G.add_edge(x[l], x[l+1])    
+
+num_nodes = G.number_of_nodes()
+num_edges = G.number_of_edges()
+
+# To draw the network
+pos = nx.spring_layout(G)
+plt.figure(0)
+nx.draw(G, pos)
+nx.draw_networkx_nodes(G, pos)
+nx.draw_networkx_edges(G, pos)
+# To save the file
+plt.savefig("proj1graph.png")
+
