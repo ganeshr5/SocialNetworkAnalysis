@@ -17,3 +17,13 @@ import networkx as nx
 import arxivscraper
 import collections
 
+
+# Part 1: Data Collection
+# Create scraper, scrape arxiv database, store output as Pandas data frame
+
+scraper = arxivscraper.Scraper(category='physics:astro-ph', date_from='2017-04-24',date_until='2017-05-05')
+output = scraper.scrape()
+# create a pandas data frame
+cols = ('id', 'title', 'categories', 'abstract', 'doi', 'created', 'updated', 'authors')
+df = pd.DataFrame(output, columns = cols)
+
