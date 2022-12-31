@@ -68,3 +68,42 @@ nx.draw_networkx_edges(G, pos)
 # To save the file
 plt.savefig("proj1graph.png")
 
+
+### Part 3 - Calculate Network properties
+
+# Degree Distribution
+degree_distrib = dict(nx.degree(G))
+plt.figure(1)
+degree_seq = sorted([d for n, d in G.degree()], reverse = True)
+degree_count = collections.Counter(degree_seq)
+d, c = zip(*degree_count.items())
+plt.bar(d, c, width = 0.5, color='g')
+plt.xlabel("Degree")
+plt.ylabel("Frequency")
+plt.title("Histogram for Degree Distribution")
+plt.savefig("proj1deg.png")     
+
+# Clustering Coefficient
+clust_coeff = nx.clustering(G)
+plt.figure(2)
+cval = clust_coeff.values()
+cval = sorted(cval)
+cnt = collections.Counter(cval)
+plt.xlim((0.0, 1.0))
+plt.bar(cnt.keys(), cnt.values(), width = 0.5, color = 'b')
+plt.xlabel("Clustering Coefficient")
+plt.ylabel("Frequency")
+plt.title("Histogram for Clustering Coefficient")
+#plt.show()
+plt.savefig("proj1clust.png")
+
+# Average Clustering
+avg_clust = nx.average_clustering(G)
+
+# Diameter
+con = nx.is_connected(G)
+# The graph is not connected
+
+# HITS and pagerank
+hits_G = nx.hits(G)[0]
+page_rank = nx.pagerank(G)
